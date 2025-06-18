@@ -17,22 +17,24 @@
 
     <ul>
         @foreach ($items as $item)
-            <li>
-                <form method="POST" action="/toggle/{{ $item->id }}" style="display:inline;">
-                    @csrf
-                    <button type="submit">{{ $item->bought ? '✅' : '⬜' }}</button>
-                </form>
+        <li>
+            <form method="POST" action="/toggle/{{ $item->id }}" style="display:inline;">
+                @csrf
+                <input type="checkbox" onchange="this.form.submit()" {{ $item->bought ? 'checked' : '' }}>
+            </form>
 
-                <strong>{{ $item->name }}</strong>
-                @if($item->category) ({{ $item->category }}) @endif
 
-                <a href="/edit/{{ $item->id }}">Edit</a>
+            <strong>{{ $item->name }}</strong>
+            @if($item->category) ({{ $item->category }}) @endif
 
-                <form method="POST" action="/delete/{{ $item->id }}" style="display:inline;">
-                    @csrf
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
+            <a href="/edit/{{ $item->id }}">Edit</a>
+
+            <form method="POST" action="/delete/{{ $item->id }}" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+        </li>
         @endforeach
     </ul>
 </body>
