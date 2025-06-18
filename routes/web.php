@@ -14,3 +14,5 @@ Route::get('/edit/{id}',[GroceryItemController::class,'edit'])->name('grocery.ed
 Route::put('/update/{id}',[GroceryItemController::class,'update'])->name('grocery.update');
 Route::delete('/delete/{id}',[GroceryItemController::class,'destroy'])->name('grocery.destroy');
 Route::post('/toggle/{id}',[GroceryItemController::class,'toggle'])->name('grocery.toggle');
+Route::delete('/clear', [GroceryItemController::class, 'clear'])->name('grocery.clear');
+Route::post('/reset', [GroceryItemController::class, 'reset'])->name('grocery.reset');
