@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Edit Item</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 </head>
 <body>
     <h1>Edit Grocery Item</h1>
