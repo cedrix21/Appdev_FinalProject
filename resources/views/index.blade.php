@@ -14,10 +14,10 @@
                 @csrf
                 <h3>Add Item</h3>
                 <input type="text" name="name" placeholder="Item name" required>
-                <select name="category" required>
+                <select name="category_id" required>
                     <option value="">-- Select a category --</option>
                     @foreach ($categories as $cat)
-                    <option value="{{ $cat }}">{{ $cat }}</option>
+                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                     @endforeach
                 </select>
                 <button type="submit">Add Item</button>
@@ -30,7 +30,7 @@
                 <select name="category" id="category">
                     <option value="">All</option>
                     @foreach($categories as $cat)
-                    <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                        <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                     @endforeach
                 </select>
 
@@ -47,8 +47,6 @@
         </div>
 
         <div class="right-column">
-
-
             <ul>
                 @foreach ($items as $item)
                 <li>
@@ -61,7 +59,7 @@
                         <span class="{{ $item->bought ? 'bought' : '' }}">
                             <strong>{{ $item->name }}</strong>
                             @if($item->category)
-                            <span class="badge {{ strtolower($item->category) }}">{{ $item->category }}</span>
+                                <span class="badge {{ strtolower($item->category->name) }}">{{ $item->category->name }}</span>
                             @endif
                         </span>
                     </div>
@@ -75,8 +73,8 @@
                         </form>
                     </div>
                 </li>
-
                 @endforeach
+
                 <div class="actions">
                     <form method="POST" action="{{ route('grocery.clear') }}">
                         @csrf

@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use App\Models\GroceryItem;
+use App\Models\Category;
 
 class GroceryItemController extends Controller
 {
     public function index(Request $request)
     {
-        $query = GroceryItem::query();
+        $query = GroceryItem::with('category');
 
         if ($request->has('category') && $request->category !== '') {
-            $query->where('category', $request->category);
+            $query->where('category_id', $request->category);
         }
 
         if ($request->has('bought') && $request->bought !== '') {
@@ -21,8 +22,7 @@ class GroceryItemController extends Controller
         }
 
         $items = $query->get();
-        $categories = ['Dairy', 'Produce', 'Bakery', 'Meat', 'Grains', 'Beverages', 'Household'];
-
+        $categories = Category::all(); 
         return view('index', compact('items', 'categories'));
     }
 
@@ -30,11 +30,12 @@ class GroceryItemController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         GroceryItem::create([
             'name' => $request->name,
-            'category' => $request->category,
+            'category_id' => $request->category_id,
         ]);
 
         return redirect('/');
@@ -43,16 +44,22 @@ class GroceryItemController extends Controller
     public function edit($id)
     {
         $item = GroceryItem::findOrFail($id);
-        $categories = ['Dairy', 'Produce', 'Bakery', 'Meat', 'Grains', 'Beverages', 'Household'];
+        $categories = Category::all();
         return view('edit', compact('item', 'categories'));
     }
 
     public function update(Request $request, $id)
     {
         $item = GroceryItem::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
         $item->update([
             'name' => $request->name,
-            'category' => $request->category,
+            'category_id' => $request->category_id,
         ]);
 
         return redirect('/');
