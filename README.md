@@ -37,4 +37,6 @@ A simple Laravel-based web application for managing your grocery list. Add, edit
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/yourusername/grocery-list-organizer.git
-cd grocery-list-organizer
+cd Appdev_FinalProject
+npm install
+composer install
