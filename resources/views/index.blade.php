@@ -2,7 +2,11 @@
 <html>
 <head>
     <title>Grocery List</title>
-    @vite('resources/css/style.css')
+    @vite([
+        'resources/css/style.css',
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
 </head>
 <body>
     <h1>Grocery List Organizer</h1>
